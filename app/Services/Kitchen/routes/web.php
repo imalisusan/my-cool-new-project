@@ -1,5 +1,7 @@
 <?php
 
+use App\Services\Kitchen\Http\Controllers\RecipeController;
+
 /*
 |--------------------------------------------------------------------------
 | Service - Web Routes
@@ -19,5 +21,11 @@ Route::group(['prefix' => 'kitchen'], function() {
     Route::get('/', function() {
         return view('kitchen::welcome');
     }); 
+
+    Route::get('/recipes/new', function() {
+        return view('kitchen::new');
+    });
+
+    Route::post('/recipes', [RecipeController::class, 'add']);
 
 });
