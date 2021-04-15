@@ -18,6 +18,6 @@ Route::group(['prefix' => 'kitchen'], function() {
 
     Route::get('/', function() {
         return view('kitchen::welcome');
-    });
+    }); 
 
 });
