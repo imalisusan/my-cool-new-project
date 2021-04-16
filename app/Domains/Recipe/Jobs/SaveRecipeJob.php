@@ -2,7 +2,9 @@
 
 namespace App\Domains\Recipe\Jobs;
 
+use App\Models\User;
 use Lucid\Units\Job;
+use App\Data\Models\Recipe;
 
 class SaveRecipeJob extends Job
 {
@@ -11,7 +13,12 @@ class SaveRecipeJob extends Job
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(
+        private string $title,
+        private string $ingredients,
+        private string $instructions,
+        private string $price,
+        private User $user)
     {
         //
     }
@@ -21,8 +28,17 @@ class SaveRecipeJob extends Job
      *
      * @return void
      */
-    public function handle()
+    public function handle(): Recipe
     {
-        //
+        $attributes = [
+            'title' => $this->title,
+            'ingredients' => $this->ingredients,
+            'instructions' => $this->instructions,
+            'price' => $this->price,
+            'user_id' => $this->user->getKey(),
+        ];
+
+        return tap(new Recipe($attributes))->save();
+
     }
 }
